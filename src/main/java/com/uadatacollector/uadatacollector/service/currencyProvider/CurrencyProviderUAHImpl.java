@@ -26,7 +26,7 @@ public class CurrencyProviderUAHImpl implements CurrencyProvider {
             Document doc = Jsoup.connect(DEFAULT_URL_RESOURCE_UAH).get();
             bankRates = getRates(doc, currencies);
         } catch (IOException e){
-            System.out.println("e = " + e);
+            e.printStackTrace();
         }
         return bankRates;
     }

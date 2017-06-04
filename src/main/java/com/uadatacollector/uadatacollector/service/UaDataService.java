@@ -1,6 +1,7 @@
 package com.uadatacollector.uadatacollector.service;
 
 import com.uadatacollector.uadatacollector.service.entity.BankRate;
+import com.uadatacollector.uadatacollector.service.entity.WeatherData;
 
 import java.util.List;
 
@@ -10,7 +11,11 @@ import java.util.List;
 public interface UaDataService {
     String getWeather();
 
+    List<WeatherData> getWeatherDefault();
+
     String getCurrencyRate();
 
     List<BankRate> getCurrencyRate(String currency);
+
+
 }

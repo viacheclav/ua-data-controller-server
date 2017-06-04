@@ -22,6 +22,11 @@ public class CachingSetup implements JCacheManagerCustomizer {
                 .setStoreByValue(false)
                 .setStatisticsEnabled(true));
 
+        cacheManager.createCache("weatherDefault", new MutableConfiguration<>()
+                .setExpiryPolicyFactory(TouchedExpiryPolicy.factoryOf(new Duration(MINUTES, 60)))
+                .setStoreByValue(false)
+                .setStatisticsEnabled(true));
+
         cacheManager.createCache("currency", new MutableConfiguration<>()
                 .setExpiryPolicyFactory(TouchedExpiryPolicy.factoryOf(new Duration(MINUTES, 60)))
                 .setStoreByValue(false)
@@ -32,6 +37,5 @@ public class CachingSetup implements JCacheManagerCustomizer {
                 .setExpiryPolicyFactory(TouchedExpiryPolicy.factoryOf(new Duration(MINUTES, 60)))
                 .setStoreByValue(false)
                 .setStatisticsEnabled(true));
-
     }
 }

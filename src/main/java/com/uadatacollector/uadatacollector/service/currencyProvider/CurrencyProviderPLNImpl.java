@@ -27,7 +27,7 @@ public class CurrencyProviderPLNImpl implements CurrencyProvider {
             Document doc = Jsoup.connect(DEFAULT_URL_RESOURCE_PLN).get();
             bankRates = getRates(doc, currencies);
         } catch (IOException e){
-            System.out.println("e = " + e);
+            e.printStackTrace();
         }
         return bankRates;
     }

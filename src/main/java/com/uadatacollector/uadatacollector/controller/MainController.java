@@ -2,6 +2,7 @@ package com.uadatacollector.uadatacollector.controller;
 
 import com.uadatacollector.uadatacollector.service.UaDataService;
 import com.uadatacollector.uadatacollector.service.entity.BankRate;
+import com.uadatacollector.uadatacollector.service.entity.WeatherData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,12 @@ public class MainController {
     public String getWeather(){
         logger.info("getWeather of controller");
         return uaDataService.getWeather();
+    }
+
+    @GetMapping("/weather-default")
+    public List<WeatherData> getWeatherDefault(){
+        logger.info("getWeatherDefault of controller");
+        return uaDataService.getWeatherDefault();
     }
 
     @GetMapping("/currency-rate")

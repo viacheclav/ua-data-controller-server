@@ -2,6 +2,8 @@ package com.uadatacollector.uadatacollector.service;
 
 import com.uadatacollector.uadatacollector.service.currencyProvider.CurrencyProviderFactory;
 import com.uadatacollector.uadatacollector.service.entity.BankRate;
+import com.uadatacollector.uadatacollector.service.entity.WeatherData;
+import com.uadatacollector.uadatacollector.service.weatherProvider.WeatherProviderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,12 @@ public class UaDataServiceImpl implements UaDataService {
         logger.info("getWeather");
         String url = "https://api.darksky.net/forecast/168fadfede1544e059bcdb37336178f7/50.4333,30.5167?exclude=minutely&lang=uk&units=si";
         return getData(url);
+    }
+
+    @Override
+    @CacheResult(cacheName = "weatherDefault")
+    public List<WeatherData> getWeatherDefault(){
+        return WeatherProviderFactory.getInstance().getWeather();
     }
 
     @Override
