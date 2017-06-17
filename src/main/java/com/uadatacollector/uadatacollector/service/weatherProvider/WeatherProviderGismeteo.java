@@ -17,7 +17,7 @@ import java.util.stream.Stream;
  * Created by slavik on 2017-06-04.
  */
 @Component
-public class WeatherProviderDefaultImpl implements WeatherProvider {
+public class WeatherProviderGismeteo implements WeatherProvider {
 
     private static final String DEFAULT_URL_RESOURCE_WEATHER = "https://www.gismeteo.ua/ua/weather-kyiv-4944/";
 
@@ -38,15 +38,20 @@ public class WeatherProviderDefaultImpl implements WeatherProvider {
             Elements tab = doc.select("#tab_wdaily" + i);
             Elements minMax = tab.select(".c");
             List<Weather> weatherList = doc.select("#tbwdaily" + i + " tr").stream()
-                    .map(el -> {
-                        String time = el.select("th").text();
-                        String title = el.select(".cltext").text();
-                        String temperature = el.select(".temp").select(".c").text();
-                        String image = el.select("img").attr("src");
-                        return new Weather(time, title, temperature, image);
-                    }).collect(Collectors.toList());
-            return new WeatherData(tab.select("dl dt").text(), tab.select("dl dd").text(), minMax.get(0).text(),
-                    minMax.get(1).text(), weatherList);
+                    .map(el -> Weather.newBuilder()
+                            .time(el.select("th").text())
+                            .title(el.select(".cltext").text())
+                            .temperature(el.select(".temp").select(".c").text())
+                            .image(el.select("img").attr("src"))
+                            .build()
+                    ).collect(Collectors.toList());
+            return WeatherData.newBuilder()
+                    .dayName(tab.select("dl dt").text())
+                    .date(tab.select("dl dd").text())
+                    .min(minMax.get(0).text())
+                    .max(minMax.get(1).text())
+                    .weathers(weatherList)
+                    .build();
         }).collect(Collectors.toList());
     }
 

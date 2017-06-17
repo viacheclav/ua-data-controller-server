@@ -11,15 +11,15 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableCaching
 @EnableScheduling
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
-//public class UadatacollectorApplication extends SpringBootServletInitializer {
-public class UadatacollectorApplication {
+public class UadatacollectorApplication extends SpringBootServletInitializer {
+//public class UadatacollectorApplication {
 
-//	@Override
-//	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-//		return application.sources(UadatacollectorApplication.class);
-//	}
-
-	public static void main(String[] args) {
-		SpringApplication.run(UadatacollectorApplication.class, args);
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(UadatacollectorApplication.class);
 	}
+
+//	public static void main(String[] args) {
+//		SpringApplication.run(UadatacollectorApplication.class, args);
+//	}
 }

@@ -33,10 +33,10 @@ public class MainController {
         return uaDataService.getWeather();
     }
 
-    @GetMapping("/weather-default")
-    public List<WeatherData> getWeatherDefault(){
+    @GetMapping("/weather-default/{providerCode}")
+    public List<WeatherData> getWeatherDefault(@PathVariable String providerCode){
         logger.info("getWeatherDefault of controller");
-        return uaDataService.getWeatherDefault();
+        return uaDataService.getWeatherDefault(providerCode);
     }
 
     @GetMapping("/currency-rate")

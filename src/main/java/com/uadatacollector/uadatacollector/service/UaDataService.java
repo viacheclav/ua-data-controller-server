@@ -11,7 +11,7 @@ import java.util.List;
 public interface UaDataService {
     String getWeather();
 
-    List<WeatherData> getWeatherDefault();
+    List<WeatherData> getWeatherDefault(String providerCode);
 
     String getCurrencyRate();
 

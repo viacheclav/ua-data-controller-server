@@ -4,6 +4,7 @@ import com.uadatacollector.uadatacollector.service.currencyProvider.CurrencyProv
 import com.uadatacollector.uadatacollector.service.entity.BankRate;
 import com.uadatacollector.uadatacollector.service.entity.WeatherData;
 import com.uadatacollector.uadatacollector.service.weatherProvider.WeatherProviderFactory;
+import com.uadatacollector.uadatacollector.service.weatherProvider.WeatherProviderType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -32,8 +33,8 @@ public class UaDataServiceImpl implements UaDataService {
 
     @Override
     @CacheResult(cacheName = "weatherDefault")
-    public List<WeatherData> getWeatherDefault(){
-        return WeatherProviderFactory.getInstance().getWeather();
+    public List<WeatherData> getWeatherDefault(String providerCode){
+        return WeatherProviderFactory.getInstance(WeatherProviderType.getType(providerCode)).getWeather();
     }
 
     @Override

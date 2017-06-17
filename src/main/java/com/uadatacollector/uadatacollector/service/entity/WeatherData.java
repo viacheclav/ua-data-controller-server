@@ -7,25 +7,29 @@ import java.util.List;
  */
 public class WeatherData {
     private final String dayName;
-    private final String data;
+    private final String date;
     private final String min;
     private final String max;
     private final List<Weather> weathers;
 
-    public WeatherData(String dayName, String data, String min, String max, List<Weather> weathers) {
-        this.dayName = dayName;
-        this.data = data;
-        this.min = min;
-        this.max = max;
-        this.weathers = weathers;
+    private WeatherData(Builder builder) {
+        dayName = builder.dayName;
+        date = builder.date;
+        min = builder.min;
+        max = builder.max;
+        weathers = builder.weathers;
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
     public String getDayName() {
         return dayName;
     }
 
-    public String getData() {
-        return data;
+    public String getDate() {
+        return date;
     }
 
     public String getMin() {
@@ -44,10 +48,51 @@ public class WeatherData {
     public String toString() {
         return "WeatherData{" +
                 "dayName='" + dayName + '\'' +
-                ", data='" + data + '\'' +
+                ", date='" + date + '\'' +
                 ", min='" + min + '\'' +
                 ", max='" + max + '\'' +
                 ", weathers=" + weathers +
                 '}';
+    }
+
+
+    public static final class Builder {
+        private String dayName;
+        private String date;
+        private String min;
+        private String max;
+        private List<Weather> weathers;
+
+        private Builder() {
+        }
+
+        public Builder dayName(String val) {
+            dayName = val;
+            return this;
+        }
+
+        public Builder date(String val) {
+            date = val;
+            return this;
+        }
+
+        public Builder min(String val) {
+            min = val;
+            return this;
+        }
+
+        public Builder max(String val) {
+            max = val;
+            return this;
+        }
+
+        public Builder weathers(List<Weather> val) {
+            weathers = val;
+            return this;
+        }
+
+        public WeatherData build() {
+            return new WeatherData(this);
+        }
     }
 }
