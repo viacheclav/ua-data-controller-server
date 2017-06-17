@@ -45,7 +45,7 @@ public class CurrencyProviderPLNImpl implements CurrencyProvider {
                     Collections.sort(prices);
 
                     return BankRate.newBuilder()
-                            .title("")
+                            .title("kantor-exchange.pl")
                             .currency(currency)
                             .buy(prices.get(0) / 100.0)
                             .sell(prices.get(1) / 100.0)

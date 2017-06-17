@@ -20,12 +20,14 @@ import java.util.stream.Stream;
 public class WeatherProviderGismeteo implements WeatherProvider {
 
     private static final String DEFAULT_URL_RESOURCE_WEATHER = "https://www.gismeteo.ua/ua/weather-kyiv-4944/";
+    private static final String DEFAULT_URL_RESOURCE_WEATHER_KRAKOW = "https://www.gismeteo.ua/ua/weather-krakow-3212/";
 
     @Override
-    public List<WeatherData> getWeather() {
+    public List<WeatherData> getWeather(String city) {
+        String baseUrl = "krakow".equals(city) ? DEFAULT_URL_RESOURCE_WEATHER_KRAKOW : DEFAULT_URL_RESOURCE_WEATHER;
         List<WeatherData> weatherData = new ArrayList<>();
         try {
-            Document doc = Jsoup.connect(DEFAULT_URL_RESOURCE_WEATHER).get();
+            Document doc = Jsoup.connect(baseUrl).get();
             weatherData = getWeather(doc);
         } catch (IOException e) {
             e.printStackTrace();

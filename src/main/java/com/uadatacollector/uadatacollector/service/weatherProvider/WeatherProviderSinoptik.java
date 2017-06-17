@@ -24,21 +24,23 @@ import java.util.stream.IntStream;
 @Component
 public class WeatherProviderSinoptik implements WeatherProvider {
 
-    private static final String DEFAULT_URL_RESOURCE_WEATHER = "https://sinoptik.ua/погода-киев";
+    private static final String DEFAULT_URL_RESOURCE_WEATHER = "https://ua.sinoptik.ua/погода-киев";
+    private static final String DEFAULT_URL_RESOURCE_WEATHER_KRAKOW = "https://ua.sinoptik.ua/погода-краков";
 
     @Override
-    public List<WeatherData> getWeather() {
+    public List<WeatherData> getWeather(String city) {
+        String baseUrl = "krakow".equals(city) ? DEFAULT_URL_RESOURCE_WEATHER_KRAKOW : DEFAULT_URL_RESOURCE_WEATHER;
         List<WeatherData> weatherData = new ArrayList<>();
         try {
             List<String> urls = IntStream.range(0, 3).boxed()
-                    .map(i -> DEFAULT_URL_RESOURCE_WEATHER + "/" + LocalDate.now().plusDays(i) + "?ajax=GetForecast")
+                    .map(i -> baseUrl + "/" + LocalDate.now().plusDays(i) + "?ajax=GetForecast")
                     .collect(Collectors.toList());
             List<Document> forecasts = new ArrayList<>();
             for (String url : urls) {
                 Document forecast = Jsoup.connect(url).get();
                 forecasts.add(forecast);
             }
-            Document doc = Jsoup.connect(DEFAULT_URL_RESOURCE_WEATHER).get();
+            Document doc = Jsoup.connect(baseUrl).get();
             weatherData = getWeather(doc, forecasts);
         } catch (IOException e) {
             e.printStackTrace();

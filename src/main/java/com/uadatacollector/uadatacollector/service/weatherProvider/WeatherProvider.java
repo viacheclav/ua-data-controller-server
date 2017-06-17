@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface WeatherProvider {
 
-    List<WeatherData> getWeather();
+    List<WeatherData> getWeather(String city);
 }

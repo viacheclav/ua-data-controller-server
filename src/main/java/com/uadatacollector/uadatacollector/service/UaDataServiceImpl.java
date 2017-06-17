@@ -33,8 +33,8 @@ public class UaDataServiceImpl implements UaDataService {
 
     @Override
     @CacheResult(cacheName = "weatherDefault")
-    public List<WeatherData> getWeatherDefault(String providerCode){
-        return WeatherProviderFactory.getInstance(WeatherProviderType.getType(providerCode)).getWeather();
+    public List<WeatherData> getWeatherDefault(String city, String providerCode){
+        return WeatherProviderFactory.getInstance(WeatherProviderType.getType(providerCode)).getWeather(city);
     }
 
     @Override
