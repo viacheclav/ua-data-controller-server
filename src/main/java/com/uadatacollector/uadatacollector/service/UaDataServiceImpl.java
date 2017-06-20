@@ -23,13 +23,6 @@ public class UaDataServiceImpl implements UaDataService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Override
-    @CacheResult(cacheName = "weather")
-    public String getWeather(){
-        logger.info("getWeather");
-        String url = "https://api.darksky.net/forecast/168fadfede1544e059bcdb37336178f7/50.4333,30.5167?exclude=minutely&lang=uk&units=si";
-        return getData(url);
-    }
 
     @Override
     @CacheResult(cacheName = "weatherDefault")

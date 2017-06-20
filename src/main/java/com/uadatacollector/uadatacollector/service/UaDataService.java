@@ -9,7 +9,6 @@ import java.util.List;
  * Created by slavik on 2017-05-25.
  */
 public interface UaDataService {
-    String getWeather();
 
     List<WeatherData> getWeatherDefault(String city, String providerCode);
 
