@@ -1,6 +1,7 @@
 package com.uadatacollector.uadatacollector;
 
 import com.uadatacollector.uadatacollector.adminService.AdminService;
+import com.uadatacollector.uadatacollector.adminService.AdminServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +30,11 @@ public class FilterToSaveUserStatistic implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
-        adminService.saveUserStatisticData(request);
+        String ipAddress = request.getRemoteAddr();
+        String ipAddressByHeader = request.getHeader("X-FORWARDED-FOR");
+        String requestURI = request.getRequestURI();
+
+        adminService.saveUserStatisticData(ipAddress, ipAddressByHeader, requestURI);
         chain.doFilter(req, res);
     }
 

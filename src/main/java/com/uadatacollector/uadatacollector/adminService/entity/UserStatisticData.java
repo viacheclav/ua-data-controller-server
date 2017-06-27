@@ -20,6 +20,7 @@ public class UserStatisticData {
     private LocalDateTime localDateTime;
     private LocalDateTime utcDateTime;
     private String countryCode;
+    private String requestUrl;
 
 
     public String getId() {
@@ -86,6 +87,14 @@ public class UserStatisticData {
         this.countryCode = countryCode;
     }
 
+    public String getRequestUrl() {
+        return requestUrl;
+    }
+
+    public void setRequestUrl(String requestUrl) {
+        this.requestUrl = requestUrl;
+    }
+
     @Override
     public String toString() {
         return "UserStatisticData{" +
@@ -97,6 +106,7 @@ public class UserStatisticData {
                 ", localDateTime=" + localDateTime +
                 ", utcDateTime=" + utcDateTime +
                 ", countryCode='" + countryCode + '\'' +
+                ", requestUrl='" + requestUrl + '\'' +
                 '}';
     }
 }

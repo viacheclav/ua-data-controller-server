@@ -2,6 +2,7 @@ package com.uadatacollector.uadatacollector.adminService;
 
 import com.uadatacollector.uadatacollector.adminService.dao.AdminDao;
 import com.uadatacollector.uadatacollector.adminService.entity.UserStatisticData;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -26,17 +27,20 @@ public class AdminServiceImpl implements AdminService {
 
     @Async
     @Override
-    public void saveUserStatisticData(HttpServletRequest request) {
-        String ipAddress = request.getRemoteAddr();
-        String ipAddressByHeader = request.getHeader("X-FORWARDED-FOR");
+    public void saveUserStatisticData(String ipAddress, String ipAddressByHeader, String requestURI) {
+        if (StringUtils.isEmpty(ipAddress) || StringUtils.isEmpty(requestURI)){
+            return;
+        }
         GeoIpResult geoIpResult = getCountryByIp(ipAddress);
-
         Instant instant = Instant.now();
         LocalDateTime utcDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+        LocalDateTime localDateTime = null;
 
         String timeZone = geoIpResult.getTime_zone();
-        ZoneId zoneId = ZoneId.of(timeZone);
-        LocalDateTime localDateTime = instant.atZone(zoneId).toLocalDateTime();
+        if (StringUtils.isNotEmpty(timeZone)) {
+            ZoneId zoneId = ZoneId.of(timeZone);
+            localDateTime = instant.atZone(zoneId).toLocalDateTime();
+        }
 
         UserStatisticData userStatisticData = new UserStatisticData();
         userStatisticData.setIp(ipAddress);
@@ -46,15 +50,21 @@ public class AdminServiceImpl implements AdminService {
         userStatisticData.setLocalDateTime(localDateTime);
         userStatisticData.setUtcDateTime(utcDateTime);
         userStatisticData.setCountryCode(geoIpResult.getCountry_code());
+        userStatisticData.setRequestUrl(requestURI);
 
         adminDao.save(userStatisticData);
+
     }
 
-
     private GeoIpResult getCountryByIp(String ip) {
-        String url = "http://freegeoip.net/json/" + ip;
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(url, GeoIpResult.class);
+        try {
+            String url = "http://freegeoip.net/json/" + ip;
+            RestTemplate restTemplate = new RestTemplate();
+            return restTemplate.getForObject(url, GeoIpResult.class);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return new GeoIpResult();
     }
 
     private static class GeoIpResult {

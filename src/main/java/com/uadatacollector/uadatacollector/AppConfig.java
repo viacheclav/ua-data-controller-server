@@ -36,7 +36,7 @@ public class AppConfig {
         FilterToSaveUserStatistic myFilter = new FilterToSaveUserStatistic(adminService);
         beanFactory.autowireBean(myFilter);
         registration.setFilter(myFilter);
-        registration.addUrlPatterns("/");
+        registration.addUrlPatterns("/","/api/*");
         return registration;
     }
 }
